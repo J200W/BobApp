@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   test-backend:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
@@ -40,7 +40,7 @@ jobs:
         path: target/site/jacoco
 
   test-frontend:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
