@@ -36,5 +36,4 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        working-directory: back
-        run: mvn -B -q verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Bobapp -Dsonar.projectName='Bobapp'
+        run: mvn -B -q verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=J200W_BobApp_3830c631-b0d7-4b50-a35d-2c5eb9294ef2 -Dsonar.projectName='BobApp'
