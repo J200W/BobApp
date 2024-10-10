@@ -1,6 +1,6 @@
 
-/back/target/classes
-/back/target/test-classes
+/back/target
 /front/.angular
 /front/node_modules
 /front/package-lock.json
+/front/coverage
