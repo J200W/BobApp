@@ -4,3 +4,5 @@
 /front/node_modules
 /front/package-lock.json
 /front/coverage
+
+.DS_Store
