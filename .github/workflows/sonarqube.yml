@@ -1,32 +1,18 @@
-name: Build
+name: SonarCloud Scan
 
 on:
   push:
     branches:
       - main
-
-
 jobs:
-  build:
-    name: Build and analyze
+  sonarcloud:
     runs-on: ubuntu-latest
-
-    services:
-      sonarqube:
-        image: sonarqube:10.6-community
-        ports:
-          - 9000:9000
-        options: >-
-          --health-cmd="curl -f http://localhost:9000/api/system/health || exit 1"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
-    
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - uses: sonarsource/sonarqube-scan-action@v3
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+    - uses: actions/checkout@v4
+      with:
+        # Disabling shallow clone is recommended for improving relevancy of reporting
+        fetch-depth: 0
+    - name: SonarCloud Scan
+      uses: sonarsource/sonarcloud-github-action@v3.1.0 # Ex: v2.1.0, See the latest version at https://github.com/marketplace/actions/sonarcloud-scan
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
