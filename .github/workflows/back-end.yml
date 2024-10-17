@@ -1,4 +1,4 @@
-name: SonarCloud Back
+name: CI/CD Backend
 on:
   push:
     branches:
@@ -37,7 +37,8 @@ jobs:
       - name: SonarCloud Scan
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B -q verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
   
   test-backend:
     runs-on: ubuntu-latest
@@ -48,9 +49,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-
-    - name: Move to backend directory
-      run: cd back
 
     - name: Set up JDK 11
       uses: actions/setup-java@v4

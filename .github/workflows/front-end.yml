@@ -1,4 +1,4 @@
-name: SonarCloud Front
+name: CI/CD Frontend
 on:
   push:
     branches:
@@ -35,16 +35,19 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
   
   test-frontend:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: front
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
     
-    - name: Move to frontend directory
-      run: cd front
 
     - name: Set up Node.js
       uses: actions/setup-node@v2
