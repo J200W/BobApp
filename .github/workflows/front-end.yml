@@ -7,7 +7,7 @@ on:
     types: [opened, synchronize, reopened]
 jobs:
   frontend-sonarcloud:
-    name: Build and analyze backend
+    name: Build and analyze frontend
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -26,7 +26,13 @@ jobs:
         run: npm install
 
       - name: Build and analyze frontend
-        run: npm run test -- --code-coverage --watch=false --browsers=ChromeHeadless
+        run: 
+          npm run test -- --code-coverage --watch=false --browsers=ChromeHeadless
+          sonar-scanner \
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_FRONT }} \
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
         
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
