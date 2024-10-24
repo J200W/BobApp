@@ -15,8 +15,8 @@
 	<description>L'application de joke par excellence !</description>
 	<properties>
 		<java.version>11</java.version>
+        <sonar.projectKey>j200w_BobApp_back</sonar.projectKey>
         <sonar.organization>j200w</sonar.organization>
-        <sonar.projectKey>J200W_BobApp_back</sonar.projectKey>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
