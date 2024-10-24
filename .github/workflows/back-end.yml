@@ -14,26 +14,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Set up JDK 17
+          fetch-depth: 0
+      - name: Initialisation du JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: 17
-          distribution: 'zulu' # Alternative distribution options are available.
-      - name: Cache SonarCloud packages
+          distribution: 'zulu'
+      - name: Mettre en cache les packages Sonar
         uses: actions/cache@v4
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
-      - name: Cache Maven packages
+      - name: Mettre en cache les packages Maven
         uses: actions/cache@v4
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
         
-      - name: SonarCloud Scan
+      - name: Scanner le code avec SonarCloud
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -46,22 +46,22 @@ jobs:
         working-directory: back
 
     steps:
-    - name: Checkout code
+    - name: Récupérer le code source
       uses: actions/checkout@v4
 
-    - name: Set up JDK 11
+    - name: Initialisation du JDK 11
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
         java-version: '11'
 
-    - name: Build with Maven
+    - name: Build avec Maven
       run: mvn clean install -B -q
 
-    - name: Run tests with coverage
+    - name: Exécution des tests unitaires et génération du rapport de couverture
       run: mvn test jacoco:report
 
-    - name: Upload coverage report
+    - name: Upload du rapport de couverture
       uses: actions/upload-artifact@v4
       with:
         name: jacoco-report
@@ -72,16 +72,16 @@ jobs:
     needs: test-backend
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Récupérer le code source
         uses: actions/checkout@v4
-      - name: Set Up Docker Buildx
+      - name: Initialisation de Docker Buildx
         uses: docker/setup-buildx-action@v3.3.0
-      - name: Login to Docker Hub
+      - name: Connexion à Docker Hub
         uses: docker/login-action@v3.2.0
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build and Push Backend Docker Image
+      - name: Build et Push l'image docker du backend
         uses: docker/build-push-action@v6.2.0
         with:
           context: ./back
