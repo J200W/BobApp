@@ -55,7 +55,7 @@ jobs:
 
   docker_build_and_push:
     name: Build et Push l'image docker du frontend
-    needs: test-frontend
+    needs: test-frontend-and-sonar
     runs-on: ubuntu-latest
     steps:
       - name: Récupérer le code source
