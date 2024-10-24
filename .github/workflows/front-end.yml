@@ -6,35 +6,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
-  frontend-sonarcloud:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: front
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       
-      - name: Initialisation de Node.js 21
-        uses: actions/setup-node@v2
-        with:
-          node-version: '21'
-
-      - name: Installation des dépendences
-        run: npm install
-        
-      - name: Scanner le code avec SonarCloud
-        uses: SonarSource/sonarcloud-github-action@master
-        with:
-          projectBaseDir: front
-          args: >
-            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   test-frontend:
     runs-on: ubuntu-latest
     defaults:
@@ -54,8 +26,11 @@ jobs:
       run: npm install
       working-directory: front
 
+    - name: Build de l'application
+      run: npm run build
+
     - name: Exécution des tests unitaires et génération du rapport de couverture
-      run: npm run test -- --code-coverage --watch=false --browsers=ChromeHeadless
+      run: npm run test -- --code-coverage --no-progress --watch=false --browsers=ChromeHeadless
       working-directory: front
 
     - name: Upload du rapport de couverture
@@ -63,6 +38,19 @@ jobs:
       with:
         name: coverage-report
         path: front/coverage/bobapp
+        overwrite: true
+        if-no-files-found: error
+
+    - name: Scanner le code avec SonarCloud
+      uses: SonarSource/sonarcloud-github-action@master
+      with:
+        projectBaseDir: front
+        args: >
+          -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+          -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   docker_build_and_push:
     needs: test-frontend
