@@ -7,7 +7,8 @@ on:
     types: [opened, synchronize, reopened]
 jobs:
       
-  test-frontend:
+  test-frontend-and-sonar:
+    name: Tester le frontend et analyser avec SonarCloud
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -53,6 +54,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   docker_build_and_push:
+    name: Build et Push l'image docker du frontend
     needs: test-frontend
     runs-on: ubuntu-latest
     steps:
