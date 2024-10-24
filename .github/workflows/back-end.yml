@@ -20,7 +20,7 @@ jobs:
     - name: Initialisation du JDK 17
       uses: actions/setup-java@v4
       with:
-        distribution: 'zul'
+        distribution: 'zulu'
         java-version: 17
     
     - name: Mettre en cache les packages Sonar
