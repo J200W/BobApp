@@ -24,11 +24,15 @@ jobs:
         node-version: '21'
 
     - name: Installation des dépendences
-      run: npm install
+      run: npm install --verbose
       working-directory: front
+
+    - name: Debugging
+      run: ls -la && cat package.json
 
     - name: Build de l'application
       run: npm run build
+
 
     - name: Exécution des tests unitaires et génération du rapport de couverture
       run: npm run test -- --code-coverage --no-progress --watch=false --browsers=ChromeHeadless
