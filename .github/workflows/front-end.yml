@@ -18,10 +18,10 @@ jobs:
     - name:  Récupérer le code source
       uses: actions/checkout@v2
     
-    - name: Initialisation de Node.js 21
+    - name: Initialisation de Node.js 22
       uses: actions/setup-node@v2
       with:
-        node-version: '21'
+        node-version: '22'
 
     - name: Installation des dépendences
       run: npm install
