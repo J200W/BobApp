@@ -27,9 +27,6 @@ jobs:
       run: npm install
       working-directory: front
 
-    - name: Debugging
-      run: ls -la && cat package.json
-
     - name: Build de l'application
       run: npm run build
 
