@@ -1,4 +1,4 @@
-FROM node:latest AS build
+FROM node:22.11.0 AS build
 
 WORKDIR /usr/local/app
 COPY ./ /usr/local/app/
