@@ -3,8 +3,7 @@ FROM node:latest AS build
 WORKDIR /usr/local/app
 COPY ./ /usr/local/app/
 
-RUN yarn \
-&& npm run build
+RUN npm run build
  
 FROM nginx:latest AS production
 
