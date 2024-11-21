@@ -24,7 +24,7 @@ jobs:
         node-version: '21'
 
     - name: Installation des dépendences
-      run: npm install --verbose
+      run: npm install
       working-directory: front
 
     - name: Debugging
