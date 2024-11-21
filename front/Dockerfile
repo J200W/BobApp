@@ -3,7 +3,7 @@ FROM node:latest AS build
 WORKDIR /usr/local/app
 COPY ./ /usr/local/app/
 
-RUN npm i
+RUN npm i && npm i -g @angular/cli && npm run build
  
 FROM nginx:latest AS production
 
