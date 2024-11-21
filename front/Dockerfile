@@ -3,7 +3,9 @@ FROM node:latest AS build
 WORKDIR /usr/local/app
 COPY ./ /usr/local/app/
 
-RUN npm run build
+RUN npm install -g @angular/cli \
+    && yarn \
+    && npm run build
  
 FROM nginx:latest AS production
 
